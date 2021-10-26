@@ -7,3 +7,5 @@ nextrun.sh is the compile file.
 The datasets are in https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/ and http://corpus-texmex.irisa.fr/
 
 use svm2norm.cpp to preprocess the datasets
+
+the include files are in kmeans_gpu/include/
