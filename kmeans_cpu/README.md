@@ -8,3 +8,5 @@ compare_kmeans.cpp实现了standard kmeans，minibatch kmeans（mbkm）和stalen
 编译指令见下：
 
 g++ -o compare_kmeans.run -pthread -mavx512f -mavx512f -mavx512cd -mavx512er -mavx512pf -mavx512vl -mavx512dq -mavx512bw compare_kmeans.cpp ./include/util/timer.cpp ./include/util/dataIo.cpp ./include/util/arguments.cpp ./include/util/allocation.cpp ./include/mckm/mckm.cpp ./include/cmdparser/cmdlineparser.cpp ./include/cmdparser/cmdlineparser.h ./include/logger/logger.h ./include/logger/logger.cpp -O3
+
+通过./compare_kmeans.run运行。
