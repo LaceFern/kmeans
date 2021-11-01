@@ -6,18 +6,18 @@
 #include <math.h>
 #include <pthread.h>
 	
-#include "../util/allocation.h"
-#include "../util/dataIo.h"
-#include "../util/arguments.h"
-#include "../mckm/mckm.h"
-#include "../util/timer.h"
-#include "../cmdparser/cmdlineparser.h"
+#include "./include/util/allocation.h"
+#include "./include/util/dataIo.h"
+#include "./include/util/arguments.h"
+#include "./include/mckm/mckm.h"
+#include "./include/util/timer.h"
+#include "./include/cmdparser/cmdlineparser.h"
 
-#define DSINFO_NUM 1
-#define K_NUM 1
+#define DSINFO_NUM 4
+#define K_NUM 4
 #define BS_NUM 4
-#define SEED_NUM 1
-#define A_NUM 6
+#define SEED_NUM 3
+#define A_NUM 4
 
 const int para_d = 16;
 const int para_d_db = 8;
@@ -33,7 +33,7 @@ typedef struct dataset_info_str{
     int d;
 }dsinfo;
 
-char *fout_root = "/home/zxy/final/next_results_8";
+char *fout_root = "./results";
 
 #define NUM_THREADS 16
 pthread_barrier_t barrier;
@@ -884,22 +884,17 @@ int main(int argc, char** argv) {
     float *input = NULL;
     
     dsinfo dsinfo_arr[DSINFO_NUM] = {
-        // {"sift", "/home/zxy/dataset/fvecs/sift/sift_base.fvecs", "fvecs", 1000000, 128}
-        // {"poker", "/home/zxy/dataset/libsvm/poker.t", "libsvm", 1000000, 10},
-        // {"sift", "/home/zxy/dataset/fvecs/sift/sift_base.fvecs", "fvecs", 1000000, 128},
-        // {"poker", "/home/zxy/dataset/libsvm/poker.t", "libsvm", 1000000, 10},
-        // {"gist", "/home/zxy/dataset/fvecs/gist/gist_base.fvecs", "fvecs", 1000000, 960}
+        {"sift", "/home/zxy/dataset/fvecs/sift/sift_base.fvecs", "fvecs", 1000000, 128},
+        {"poker", "/home/zxy/dataset/libsvm/poker.t", "libsvm", 1000000, 10},
+        {"gist", "/home/zxy/dataset/fvecs/gist/gist_base.fvecs", "fvecs", 1000000, 960}
         {"mnist8m", "/home/zxy/dataset/libsvm/mnist8m", "libsvm", 8100000, 784},
         };
 
-    int k_arr[K_NUM] = {128};
-    // int k_arr[K_NUM] = {16};
-    int seed_arr[SEED_NUM] = {1};
+    int k_arr[K_NUM] = {16, 32, 64, 128};
+    int seed_arr[SEED_NUM] = {1, 10, 100};
     int batchsize_arr[BS_NUM] = {1024, 4096, 16384, 65536};
-    // int batchsize_arr[BS_NUM] = {4096};
-    float alpha_arr[A_NUM] = {0, 0.01, 0.1, 1, 10, 100};
+    float alpha_arr[A_NUM] = {0, 0.01, 0.1, 1};
     int batchsize_max = 65536;
-    // int batchsize_arr[BS_NUM] = {983040, 4096, 16384, 65536};
     int threads = 16;
     
     
@@ -934,18 +929,17 @@ int main(int argc, char** argv) {
                 initial_centroids(k, d, n, means, dmatrix);
                 start_km(n, d, k, dsinfo_arr[dsinfo_idx].filename, dmatrix, means, seed, threads); //打印：前10个每个都打印，前10-50个每10个打印一次
 
-                // for(int bs_idx = 0; bs_idx < 1; bs_idx++){
-                //     int batchsize = batchsize_arr[bs_idx];
-                //     // int batchsize = batchsize_arr[k_idx];
-                //     // initial_centroids(k, d, n, means, dmatrix);
-                //     // start_mbkm(n, d, k, dsinfo_arr[dsinfo_idx].filename, dmatrix, means, batchsize, seed, threads); //打印：前10个每个都打印，前10-50个每10个打印一次
+                for(int bs_idx = 0; bs_idx < 1; bs_idx++){
+                    int batchsize = batchsize_arr[bs_idx];
+                    initial_centroids(k, d, n, means, dmatrix);
+                    start_mbkm(n, d, k, dsinfo_arr[dsinfo_idx].filename, dmatrix, means, batchsize, seed, threads); //打印：前10个每个都打印，前10-50个每10个打印一次
 
-                //     for(int a_idx = 0; a_idx < A_NUM; a_idx++){
-                //         double alpha = alpha_arr[a_idx];
-                //         initial_centroids(k, d, n, means, dmatrix);
-                //         start_srmbkm(n, d, k, dsinfo_arr[dsinfo_idx].filename, dmatrix, means, batchsize, seed, alpha, threads); //打印：只打印前10个
-                //     }
-                // }
+                    for(int a_idx = 0; a_idx < A_NUM; a_idx++){
+                        double alpha = alpha_arr[a_idx];
+                        initial_centroids(k, d, n, means, dmatrix);
+                        start_srmbkm(n, d, k, dsinfo_arr[dsinfo_idx].filename, dmatrix, means, batchsize, seed, alpha, threads); //打印：只打印前10个
+                    }
+                }
                 free(means);
             }
         }
