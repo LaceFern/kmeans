@@ -4,8 +4,14 @@ next_test.cpp and next_test_srnnn.cpp works.
 
 nextrun.sh is the compile file.
 
-The datasets are in https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/ and http://corpus-texmex.irisa.fr/
+数据集如下：
 
-use svm2norm.cpp to preprocess the datasets
+1.Sift（ftp://ftp.irisa.fr/local/texmex/corpus/sift.tar.gz）
 
-the include files are in kmeans_gpu/include/
+2.Gist（ftp://ftp.irisa.fr/local/texmex/corpus/gist.tar.gz）
+
+3.Poker（https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/multiclass/poker.t.bz2）
+
+4.Mnist8m（https://www.csie.ntu.edu.tw/~cjlin/libsvmtools/datasets/multiclass/mnist8m.scale.bz2）
+
+
