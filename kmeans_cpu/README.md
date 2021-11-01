@@ -1,5 +1,5 @@
 
-compare_kmeans.cpp实现了standard kmeans，minibatch kmeans（mbkm）和staleness-reduction kmeans(srmbkm，新算法)三种算法。
+compare_kmeans.cpp实现了standard kmeans，mini-batch kmeans（mbkm）和staleness-reduction mini-batch kmeans(srmbkm，新算法)三种算法。
 
 通过定义宏（DSINFO_NUM，K_NUM，BS_NUM，SEED_NUM，A_NUM），并给相应数组赋值（dsinfo_arr，k_arr，seed_arr，batchsize_arr，alpha_arr），来实现对三种算法的不同配置。其中，k_arr和seed_arr同时用于三个算法，batchsize_arr用于mbkm和srmbkm，alpha_arr只用于srmbkm。
 
