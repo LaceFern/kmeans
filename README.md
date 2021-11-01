@@ -1,10 +1,8 @@
 # kmeans
 
-next_test.cpp and next_test_srnnn.cpp works.
+该项目在CPU和GPU上实现了standard kmeans，mini-batch kmeans（mbkm）和staleness-reduction mini-batch kmeans(srmbkm，新算法)三种算法。
 
-nextrun.sh is the compile file.
-
-数据集如下：
+使用数据集如下：
 
 1.Sift（ftp://ftp.irisa.fr/local/texmex/corpus/sift.tar.gz）
 
